@@ -117,7 +117,7 @@ class PhoneAuthActivity : AppCompatActivity(), View.OnClickListener {
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
                         // [START_EXCLUDE silent]
-                        //binding.fieldVerificationCode.error = "Invalid code."
+                        layout_text_otp.error = "Invalid code."
                         // [END_EXCLUDE]
                     }
                     // [START_EXCLUDE silent]

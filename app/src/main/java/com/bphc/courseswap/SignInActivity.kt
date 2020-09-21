@@ -113,7 +113,8 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
-            Toast.makeText(this, user.email, Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PhoneAuthActivity::class.java)
+            startActivity(intent)
         } else {
             Toast.makeText(this, "null", Toast.LENGTH_SHORT).show()
         }

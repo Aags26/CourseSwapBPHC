@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "709459786571",
+    "firebase_url": "https://courseswapbphc.firebaseio.com",
+    "project_id": "courseswapbphc",
+    "storage_bucket": "courseswapbphc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709459786571:android:560f3c77d8e65407ee86ce",
+        "android_client_info": {
+          "package_name": "com.bphc.courseswap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709459786571-6uiuv22kjs33m17da11dveqb6nsec1i1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bphc.courseswap",
+            "certificate_hash": "8b31b6eee634097aab343684d13db378eb696db7"
+          }
+        },
+        {
+          "client_id": "709459786571-5m6aga61hi3k6950bkj9sh202fi8lejp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXePkVVefBnzer5cNW3FBBqB_yB54EVjs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709459786571-5m6aga61hi3k6950bkj9sh202fi8lejp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

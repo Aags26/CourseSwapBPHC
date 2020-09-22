@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_sign_in.*
 class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mSignInViewModel: SignIn
-    private lateinit var activityResultContract: ActivityResultContract<>
+    //private lateinit var activityResultContract: ActivityResultContract<>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

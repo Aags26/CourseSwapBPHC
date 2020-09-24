@@ -9,6 +9,7 @@ object Auth {
     lateinit var userEmail: String
     lateinit var userPhoneNumber: String
 
+
     fun auth() : FirebaseAuth {
         return Firebase.auth
     }

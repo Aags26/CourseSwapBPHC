@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph.xml">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/signInFragment">
 
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.bphc.courseswap.fragments.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_phoneAuthFragment"
+            app:destination="@id/phoneAuthFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/phoneAuthFragment"
+        android:name="com.bphc.courseswap.fragments.PhoneAuthFragment"
+        android:label="fragment_phone_auth"
+        tools:layout="@layout/fragment_phone_auth" >
+        <action
+            android:id="@+id/action_phoneAuthFragment_to_makeSwapRequest"
+            app:destination="@id/makeSwapRequest" />
+    </fragment>
+    <fragment
+        android:id="@+id/makeSwapRequest"
+        android:name="com.bphc.courseswap.fragments.MakeSwapRequest"
+        android:label="fragment_make_swap_request"
+        tools:layout="@layout/fragment_make_swap_request" />
 </navigation>

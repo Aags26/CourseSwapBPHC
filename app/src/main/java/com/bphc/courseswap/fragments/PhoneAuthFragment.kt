@@ -7,10 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.bphc.courseswap.R
 import com.bphc.courseswap.firebase.Auth
+import com.bphc.courseswap.models.User
+import com.bphc.courseswap.viewmodels.AddUserViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
@@ -36,6 +39,9 @@ class PhoneAuthFragment : Fragment(), View.OnClickListener {
 
     var navController: NavController? = null
 
+    private lateinit var mAddUserViewModel: AddUserViewModel
+    lateinit var mUser: User
+
     private var param1: String? = null
     private var param2: String? = null
 
@@ -56,6 +62,8 @@ class PhoneAuthFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        mAddUserViewModel = ViewModelProvider(requireActivity()).get(AddUserViewModel::class.java)
 
         button_getOtp.setOnClickListener(this)
         resend_otp.setOnClickListener(this)
@@ -260,10 +268,24 @@ class PhoneAuthFragment : Fragment(), View.OnClickListener {
                 Toast.makeText(context, "Failed to sign in", Toast.LENGTH_SHORT).show()
             }
             STATE_SIGN_IN_SUCCESS -> {
-                Toast.makeText(context, "Signed In", Toast.LENGTH_SHORT).show()
+
                 Auth.userPhoneNumber = user?.phoneNumber.toString()
-                navController = view?.let { Navigation.findNavController(it) }
-                navController!!.navigate(R.id.action_phoneAuthFragment_to_makeSwapRequest)
+
+                mUser = User(Auth.userEmail, Auth.userPhoneNumber)
+                mAddUserViewModel.addUser(mUser).observe(requireActivity(), { isRegistered ->
+                    if (isRegistered != null) {
+                        if (isRegistered) {
+                            Toast.makeText(context, "Account Created / already registered", Toast.LENGTH_SHORT).show()
+                            navController = view?.let { Navigation.findNavController(it) }
+                            navController!!.navigate(R.id.action_phoneAuthFragment_to_makeSwapRequestFragment)
+                        } else {
+                            Toast.makeText(context, "Account not created", Toast.LENGTH_SHORT).show()
+                            return@observe
+                        }
+                        return@observe
+                    }
+                })
+
             }
         }
     }

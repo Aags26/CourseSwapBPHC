@@ -20,12 +20,21 @@
         android:label="fragment_phone_auth"
         tools:layout="@layout/fragment_phone_auth" >
         <action
-            android:id="@+id/action_phoneAuthFragment_to_makeSwapRequest"
-            app:destination="@id/makeSwapRequest" />
+            android:id="@+id/action_phoneAuthFragment_to_makeSwapRequestFragment"
+            app:destination="@id/makeSwapRequestFragment" />
     </fragment>
     <fragment
-        android:id="@+id/makeSwapRequest"
-        android:name="com.bphc.courseswap.fragments.MakeSwapRequest"
+        android:id="@+id/makeSwapRequestFragment"
+        android:name="com.bphc.courseswap.fragments.MakeSwapRequestFragment"
         android:label="fragment_make_swap_request"
-        tools:layout="@layout/fragment_make_swap_request" />
+        tools:layout="@layout/fragment_make_swap_request" >
+        <action
+            android:id="@+id/action_makeSwapRequestFragment_to_mySwapRequestsFragment"
+            app:destination="@id/mySwapRequestsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mySwapRequestsFragment"
+        android:name="com.bphc.courseswap.fragments.MySwapRequestsFragment"
+        android:label="fragment_my_swap_requests"
+        tools:layout="@layout/fragment_my_swap_requests" />
 </navigation>

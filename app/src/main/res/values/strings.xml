@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">CourseSwapBPHC</string>
     <string name="server_client_id">709459786571-5m6aga61hi3k6950bkj9sh202fi8lejp.apps.googleusercontent.com</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

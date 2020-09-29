@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 const db = admin.firestore();
+const rdb = admin.database().ref("/match");
 
 exports.findMatchAndNotifyUser = functions.firestore
     .document('users/{userId}/swap/{courseId}')
@@ -35,13 +36,14 @@ exports.findMatchAndNotifyUser = functions.firestore
                     swapDoc.ref.parent.parent.get().then(userDoc => {
 
                         const userData = userDoc.data();
-                        const token = userData['userNotificationToken'];
+                        const token_recepient = userData['userNotificationToken'];
 
-                        const notificationBody = "Found a user ready to swap " + assignedCourse + 
-                                                " with " + desiredCourse;
+                        const notificationBody = "Found a user ready to swap " + desiredCourse + 
+                                                " with " + assignedCourse;
 
                         return db.doc("users/" + user).get().then(senderSnapshot => {
                             const sender = senderSnapshot.data();
+                            const token_sender = sender['userNotificationToken'];
 
                             const payload = {
 
@@ -59,9 +61,28 @@ exports.findMatchAndNotifyUser = functions.firestore
     
                             }
     
-                            return admin.messaging().sendToDevice(token, payload)
+                            return admin.messaging().sendToDevice(token_recepient, payload)
                             .then((response) => {
-                                console.log("Successfully sent message: ", response);
+
+                                const notificationBody = "Found a user ready to swap " + assignedCourse + 
+                                                " with " + desiredCourse;
+
+                                const payload = {
+
+                                    notification: {
+                                        title: "Match found!",
+                                        body: notificationBody,
+                                        clickAction: "MatchedUserActivity"
+                                    },
+                                    data: {
+                                        USER_EMAIL: userData['userEmail'] + "",
+                                        USER_PHONE: userData['userPhoneNumber'] + "",
+                                        USER_ASSIGNED: desiredCourse + "",
+                                        USER_DESIRED: assignedCourse + ""
+                                    }
+
+                                }
+                                return admin.messaging().sendToDevice(token_sender, payload)
                             })
                             .catch((error) => {
                                 console.log("Error sending message: ", error);

@@ -14,7 +14,7 @@ class AddUserRepository @Inject constructor() {
 
     fun addUser(user: User): LiveData<Boolean> {
 
-        db.document("users/${user.userEmail}")
+        db.document("users/${user.userEmail?.split('@')?.get(0)}")
             .set(user)
             .addOnCompleteListener {
                 isAdded.value = if (it.isSuccessful) {

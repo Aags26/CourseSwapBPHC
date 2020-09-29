@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bphc.courseswap.R
 import com.bphc.courseswap.adapters.MySwapRequestsAdapter
 import com.bphc.courseswap.firebase.Auth
+import com.bphc.courseswap.firebase.MessagingService
 import com.bphc.courseswap.models.Course
 import com.bphc.courseswap.models.User
 import com.bphc.courseswap.viewmodels.MySwapRequestsViewModel
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.fragment_my_swap_requests.*
 
 private const val ARG_PARAM1 = "param1"
@@ -32,7 +34,8 @@ class MySwapRequestsFragment : Fragment() {
     private var myRequests: ArrayList<Course> = ArrayList()
     private lateinit var mMySwapRequestViewModel: MySwapRequestsViewModel
     private lateinit var recyclerView: RecyclerView
-    private val user: User = User(Auth.userEmail, Auth.userPhoneNumber)
+
+    private val user: User = User(Auth.userEmail, Auth.userPhoneNumber, FirebaseInstanceId.getInstance().token)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

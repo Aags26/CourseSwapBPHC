@@ -17,7 +17,7 @@ class MySwapRequestsRepository @Inject constructor() {
 
         val data: ArrayList<Course> = ArrayList()
 
-        db.collection("users/${user.userEmail}/swap")
+        db.collection("users/${user.userEmail?.split('@')?.get(0)}/swap")
             .get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {

@@ -16,7 +16,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.bphc.courseswap.R
+import com.bphc.courseswap.firebase.Auth
 import com.bphc.courseswap.models.Course
+import com.bphc.courseswap.models.User
 import com.bphc.courseswap.viewmodels.MakeSwapRequestViewModel
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,6 +91,8 @@ class MakeSwapRequestFragment : Fragment(), NavigationView.OnNavigationItemSelec
         make_request_button.setOnClickListener {
             if (!validateFields())
                 return@setOnClickListener
+
+
 
             mCourse = Course(
                 "$inputAssignedCourseNumber $inputAssignedCourseName",

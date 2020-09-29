@@ -1,12 +1,10 @@
 package com.bphc.courseswap.repositories
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bphc.courseswap.firebase.Auth
 import com.bphc.courseswap.firebase.Database
 import com.bphc.courseswap.models.Course
-import com.bphc.courseswap.models.User
 import javax.inject.Inject
 
 class MakeSwapRequestRepository @Inject constructor() {
@@ -16,11 +14,11 @@ class MakeSwapRequestRepository @Inject constructor() {
 
     fun addCourse(course: Course): LiveData<Boolean> {
 
-            db.document("users/${Auth.userEmail}/swap/${course.assignedCourse}")
-                .set(course)
-                .addOnCompleteListener {
-                    isPosted.value = it.isSuccessful
-                }
+        db.document("users/${Auth.userEmail.split('@')[0]}/swap/${course.assignedCourse}")
+            .set(course)
+            .addOnCompleteListener {
+                isPosted.value = it.isSuccessful
+            }
 
         return isPosted
     }

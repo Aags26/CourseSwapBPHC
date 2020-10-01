@@ -11,6 +11,8 @@ exports.onDeleteRequest = functions.firestore
         const assigned = data['assignedCourse'];
         const desired = data['desiredCourse'];
 
+        console.log(match + ' ' + assigned + ' ' + desired);
+
         if (match !== "none") {
             return db.doc('users/' + match).get().then(userSnap => {
                 return db.doc('users/' + match + '/swap/' + desired).get().then(swapSnap => {
@@ -79,9 +81,13 @@ exports.onDeleteRequest = functions.firestore
                                         .then(response => {
                                             return db.doc('users/' + match + '/swap/' + desired).set({
                                                 match: matchedUserDoc.id
+                                            }, {
+                                                merge: true
                                             }).then(response => {
                                                 return db.doc('users/' + matchedUserDoc.id + '/swap/' + assigned).set({
                                                     match: match
+                                                }, {
+                                                    merge: true
                                                 })                                        
                                             })
                                         })

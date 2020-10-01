@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,28 +24,17 @@ import com.bphc.courseswap.viewmodels.MySwapRequestsViewModel
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.fragment_my_swap_requests.*
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-
-class MySwapRequestsFragment : Fragment() {
-
-    private var param1: String? = null
-    private var param2: String? = null
+class MySwapRequestsFragment : Fragment(), MySwapRequestsAdapter.OnItemClickListener {
 
     private var myRequests: ArrayList<Course> = ArrayList()
     private lateinit var mMySwapRequestViewModel: MySwapRequestsViewModel
+    private lateinit var requestAdapter: MySwapRequestsAdapter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var course: Course
 
-    private val user: User = User(Auth.userEmail, Auth.userPhoneNumber, FirebaseInstanceId.getInstance().token)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val user: User =
+        User(Auth.userEmail, Auth.userPhoneNumber, FirebaseInstanceId.getInstance().token)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,14 +49,21 @@ class MySwapRequestsFragment : Fragment() {
         mMySwapRequestViewModel =
             ViewModelProvider(requireActivity()).get(MySwapRequestsViewModel::class.java)
 
-        recyclerView = view.findViewById(R.id.recycler_view)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = MySwapRequestsAdapter(myRequests)
+        initRecyclerView(view)
+        requestAdapter.setList(myRequests)
 
         updateUI()
 
         return view
+    }
+
+    private fun initRecyclerView(view: View) {
+        recyclerView = view.findViewById(R.id.recycler_view)
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            requestAdapter = MySwapRequestsAdapter(this@MySwapRequestsFragment)
+            adapter = requestAdapter
+        }
     }
 
     private fun updateUI() {
@@ -75,21 +73,26 @@ class MySwapRequestsFragment : Fragment() {
                 if (it != null) {
                     myRequests.clear()
                     myRequests.addAll(it)
-                    recyclerView.adapter?.notifyDataSetChanged()
+                    requestAdapter.notifyDataSetChanged()
                 }
             })
 
     }
 
-    companion object {
+    override fun onItemClick(position: Int) {
+        course = myRequests[position]
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MySwapRequestsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        myRequests.removeAt(position)
+
+        mMySwapRequestViewModel.deleteRequest(course, user)
+            .observe(requireActivity(), {
+                if (it != null) {
+                    if (it) {
+                        requestAdapter.notifyItemRemoved(position)
+                    }
                 }
-            }
+
+            })
     }
+
 }

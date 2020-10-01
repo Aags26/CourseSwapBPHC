@@ -11,6 +11,7 @@ import javax.inject.Inject
 class MySwapRequestsRepository @Inject constructor() {
 
     private val _requests = MutableLiveData<ArrayList<Course>>()
+    private val _isDeleted = MutableLiveData<Boolean>()
     private val db = Database.instance()
 
     fun fetchMyRequests(user: User): LiveData<ArrayList<Course>>{
@@ -21,14 +22,21 @@ class MySwapRequestsRepository @Inject constructor() {
             .get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    for (swapRequest in it.result!!) {
-                        data.add(swapRequest.toObject(Course::class.java))
-                    }
+                    data.addAll(it.result!!.toObjects(Course::class.java))
                     _requests.value = data
-                    Log.d("ReQuEsTs", data.toString())
                 }
             }
         return _requests
+    }
+
+    fun deleteRequest(course: Course, user: User): LiveData<Boolean> {
+
+        db.document("users/${user.userEmail?.split('@')?.get(0)}/swap/${course.assignedCourse}")
+            .delete()
+            .addOnCompleteListener {
+                _isDeleted.value = it.isSuccessful
+            }
+        return _isDeleted
     }
 
 }

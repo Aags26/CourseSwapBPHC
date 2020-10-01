@@ -8,6 +8,9 @@ exports.onCreateRequest = functions.firestore
 
         const data = snap.data();
         const user = context.params.userId;
+
+        console.log(user)
+
         const assignedCourse = data['assignedCourse'];
         const desiredCourse = data['desiredCourse'];
 
@@ -21,6 +24,8 @@ exports.onCreateRequest = functions.firestore
 
                     var min = swapSnapshots.docs[0].createTime.seconds;
                     var swapDoc = swapSnapshots.docs[0];
+
+                    console.log(swapDoc.id);
 
                     swapSnapshots.forEach(doc => {
                         if (doc.createTime.seconds < min) {
@@ -78,10 +83,14 @@ exports.onCreateRequest = functions.firestore
                                 .then(response => {
                                     return db.doc('users/' + user + '/swap/' + snap.id).set({
                                         match: userDoc.id
+                                    },{
+                                        merge: true
                                     })
                                     .then(response => {
                                         return db.doc('users/' + userDoc.id + '/swap/' + swapDoc.id).set({
                                             match: user + ""
+                                        },{
+                                            merge: true
                                         })
                                     })
                                 })
@@ -97,3 +106,4 @@ exports.onCreateRequest = functions.firestore
             });
 
     });
+

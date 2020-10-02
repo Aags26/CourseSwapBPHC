@@ -15,7 +15,9 @@ import com.bphc.courseswap.models.User
 import com.bphc.courseswap.viewmodels.AddUserViewModel
 import com.bphc.courseswap.viewmodels.PhoneAuthViewModel
 import com.google.firebase.auth.*
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_phone_auth.*
 import java.util.concurrent.TimeUnit
 
@@ -29,12 +31,12 @@ class PhoneAuthFragment : Fragment(), View.OnClickListener {
     private lateinit var inputMobile: String
     private lateinit var inputOTP: String
 
-    var navController: NavController? = null
+    private var navController: NavController? = null
 
     private lateinit var mAddUserViewModel: AddUserViewModel
     private lateinit var mPhoneAuthViewModel: PhoneAuthViewModel
 
-    lateinit var mUser: User
+    private lateinit var mUser: User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -192,7 +194,7 @@ class PhoneAuthFragment : Fragment(), View.OnClickListener {
 
     private fun updateUI(
         uiState: Int,
-        user: FirebaseUser? = Auth.auth().currentUser,
+        user: FirebaseUser? = Firebase.auth.currentUser,
         cred: PhoneAuthCredential? = null
     ) {
         when (uiState) {
@@ -217,6 +219,7 @@ class PhoneAuthFragment : Fragment(), View.OnClickListener {
                 if (cred != null) {
                     if (cred.smsCode != null) {
                         layout_text_otp.editText?.setText(cred.smsCode.toString())
+                        button_getOtp.visibility = View.GONE
                     }
                 }
             }

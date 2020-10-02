@@ -12,6 +12,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class PhoneAuthViewModel @ViewModelInject constructor() : ViewModel() {
 
@@ -25,6 +27,8 @@ class PhoneAuthViewModel @ViewModelInject constructor() : ViewModel() {
     private var error: MutableLiveData<String> = MutableLiveData()
     private var user: FirebaseUser? = null
     private var exception: String = ""
+
+    private val auth = Firebase.auth
 
     fun callbacks(): PhoneAuthProvider.OnVerificationStateChangedCallbacks {
 
@@ -69,7 +73,7 @@ class PhoneAuthViewModel @ViewModelInject constructor() : ViewModel() {
     }
 
     fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        Auth.auth().signInWithCredential(credential)
+        auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithCredential:success")

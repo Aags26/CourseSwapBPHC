@@ -21,7 +21,9 @@
         tools:layout="@layout/fragment_phone_auth" >
         <action
             android:id="@+id/action_phoneAuthFragment_to_makeSwapRequestFragment"
-            app:destination="@id/makeSwapRequestFragment" />
+            app:destination="@id/makeSwapRequestFragment"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/makeSwapRequestFragment"

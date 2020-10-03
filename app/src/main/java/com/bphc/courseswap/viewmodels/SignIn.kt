@@ -19,7 +19,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class SignIn @ViewModelInject constructor(): ViewModel() {
+class SignIn @ViewModelInject constructor() : ViewModel() {
 
     private var user: MutableLiveData<FirebaseUser>? = MutableLiveData()
 
@@ -48,11 +48,8 @@ class SignIn @ViewModelInject constructor(): ViewModel() {
             }
     }
 
-    fun setUser(account: GoogleSignInAccount?) {
-        if (account != null) {
-            firebaseAuthWithGoogle(account.idToken!!)
-        } else
-            user?.value = null
+    fun setUser() {
+        user?.value = auth.currentUser
     }
 
     fun firebaseSignOut() {

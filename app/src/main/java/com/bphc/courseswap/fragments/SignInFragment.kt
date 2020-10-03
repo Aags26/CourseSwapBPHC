@@ -60,8 +60,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
-        val account = GoogleSignIn.getLastSignedInAccount(requireActivity())
-        mSignInViewModel.setUser(account)
+        mSignInViewModel.setUser()
         updateUI()
     }
 
@@ -92,6 +91,8 @@ class SignInFragment : Fragment(), View.OnClickListener {
                     Toast.makeText(context, user.email, Toast.LENGTH_SHORT).show()
                     navController = view?.let { Navigation.findNavController(it) }
                     navController!!.navigate(R.id.action_signInFragment_to_phoneAuthFragment)
+                } else {
+                    signOut()
                 }
             } else {
                 Toast.makeText(context, "null", Toast.LENGTH_SHORT).show()
@@ -102,7 +103,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
 
     companion object {
 
-        private const val RC_SIGN_IN = 9001
+        //private const val RC_SIGN_IN = 9001
 
     }
 }

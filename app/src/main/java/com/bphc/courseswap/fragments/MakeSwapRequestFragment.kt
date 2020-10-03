@@ -24,15 +24,9 @@ import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_make_swap_request.*
 
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 @AndroidEntryPoint
 class MakeSwapRequestFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener {
 
-    private var param1: String? = null
-    private var param2: String? = null
     private lateinit var mCourse: Course
 
     private lateinit var inputAssignedCourseNumber: String
@@ -47,14 +41,6 @@ class MakeSwapRequestFragment : Fragment(), NavigationView.OnNavigationItemSelec
     private lateinit var toggle: ActionBarDrawerToggle
 
     var navController: NavController? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -165,15 +151,4 @@ class MakeSwapRequestFragment : Fragment(), NavigationView.OnNavigationItemSelec
         })
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MakeSwapRequestFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

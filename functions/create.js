@@ -82,13 +82,13 @@ exports.onCreateRequest = functions.firestore
                                 return admin.messaging().sendToDevice(sender['userNotificationToken'], payload)
                                 .then(response => {
                                     return db.doc('users/' + user + '/swap/' + snap.id).set({
-                                        match: userDoc.id
+                                        match: userDoc.id + ", " + userData['userPhoneNumber']
                                     },{
                                         merge: true
                                     })
                                     .then(response => {
                                         return db.doc('users/' + userDoc.id + '/swap/' + swapDoc.id).set({
-                                            match: user + ""
+                                            match: user + ", " + sender['userPhoneNumber']
                                         },{
                                             merge: true
                                         })

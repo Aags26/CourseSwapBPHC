@@ -7,7 +7,7 @@ exports.onDeleteRequest = functions.firestore
     .onDelete((snap, context) => {
 
         const data = snap.data();
-        const match = data['match'];
+        const match = (data['match'] + "").substring(0, (data['match'] + "").indexOf(','));
         const assigned = data['assignedCourse'];
         const desired = data['desiredCourse'];
 
@@ -80,12 +80,12 @@ exports.onDeleteRequest = functions.firestore
                                         return admin.messaging().sendToDevice(userData['userNotificationToken'], payload)
                                         .then(response => {
                                             return db.doc('users/' + match + '/swap/' + desired).set({
-                                                match: matchedUserDoc.id
+                                                match: matchedUserDoc.id + ", " + matchedUserData['userPhoneNumber']
                                             }, {
                                                 merge: true
                                             }).then(response => {
                                                 return db.doc('users/' + matchedUserDoc.id + '/swap/' + assigned).set({
-                                                    match: match
+                                                    match: match + ", " + userData['userPhoneNumber']
                                                 }, {
                                                     merge: true
                                                 })                                        

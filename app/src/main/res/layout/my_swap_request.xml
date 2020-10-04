@@ -22,7 +22,7 @@
             android:id="@+id/my_assigned_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/text_assigned"
@@ -41,13 +41,32 @@
             android:id="@+id/my_desired_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/text_assigned"
+            app:layout_constraintTop_toBottomOf="@id/text_desired" />
+
+        <TextView
+            android:id="@+id/text_match"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Match: "
+            app:layout_constraintStart_toStartOf="@id/text_desired"
+            app:layout_constraintTop_toBottomOf="@id/my_desired_course"/>
+
+        <TextView
+            android:id="@+id/my_match"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/text_assigned"
-            app:layout_constraintTop_toBottomOf="@id/text_desired" />
+            app:layout_constraintStart_toStartOf="@id/text_match"
+            app:layout_constraintTop_toBottomOf="@id/text_match"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <ImageView
             android:id="@+id/delete"

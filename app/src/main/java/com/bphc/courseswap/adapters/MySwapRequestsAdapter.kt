@@ -27,6 +27,7 @@ class MySwapRequestsAdapter(
     inner class MySwapRequestsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val assignedCourse: TextView = itemView.my_assigned_course
         val desiredCourse: TextView = itemView.my_desired_course
+        val match: TextView = itemView.my_match
         private val delete: ImageView = itemView.delete
 
         init {
@@ -50,6 +51,7 @@ class MySwapRequestsAdapter(
         val myRequest = mySwapRequests[position]
         holder.assignedCourse.text = myRequest.assignedCourse
         holder.desiredCourse.text = myRequest.desiredCourse
+        holder.match.text = myRequest.match
     }
 
     override fun getItemCount() = mySwapRequests.size

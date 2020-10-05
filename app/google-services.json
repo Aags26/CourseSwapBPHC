@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "709459786571-q8fp074fe31pm29lqt6le0oc9ip8htdm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bphc.courseswap",
+            "certificate_hash": "47aa7f3be8f3474447e497ca0bf8cff17c0b6e68"
+          }
+        },
+        {
           "client_id": "709459786571-6uiuv22kjs33m17da11dveqb6nsec1i1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
